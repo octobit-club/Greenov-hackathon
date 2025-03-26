@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Global colors */
+:root {
+  --primary-color: #0f0; /* Green */
+  --secondary-color: #6a0dad; /* Purple */
+  --text-color: #fff;
+  --bg-color: #121212;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
