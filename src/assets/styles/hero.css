@@ -2,9 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100vh;
+  height: 110vh;
+  width: 100vw;
   padding: 50px;
-  background: linear-gradient(to bottom, #000000, #008000);
+  background: linear-gradient(to bottom, black 0%, var(--primary-color) 100%);
   color: white;
 }
 

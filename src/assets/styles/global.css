@@ -6,7 +6,7 @@
 
 /* Global colors */
 :root {
-  --primary-color: #0f0; /* Green */
+  --primary-color: #001125; /* Green */
   --secondary-color: #6a0dad; /* Purple */
   --text-color: #fff;
   --bg-color: #121212;
@@ -16,4 +16,5 @@ body {
   font-family: "Poppins", sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
+  overflow-x: hidden;
 }
