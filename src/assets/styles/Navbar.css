@@ -3,7 +3,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 50px;
-  background: black;
+  background: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px);
   color: white;
   position: fixed;
   width: 100%;
@@ -11,25 +13,51 @@
   top: 0;
   left: 0;
   z-index: 1000;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #4caf50; /* Green color */
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 70px;
+  width: auto;
+  filter: drop-shadow(0 0 10px rgba(76, 175, 80, 0.3));
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 30px;
+  gap: 2rem;
+  align-items: center;
 }
 
 .nav-links li a {
   text-decoration: none;
   color: white;
-  font-size: 18px;
-  transition: 0.3s;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.nav-links li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #4caf50;
+  transition: width 0.3s ease;
+}
+
+.nav-links li a:hover::after {
+  width: 100%;
 }
 
 .nav-links li a:hover {
@@ -37,14 +65,43 @@
 }
 
 .cta {
-  background: #4caf50;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: 0.3s;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-align: center;
+  letter-spacing: 0.5px;
 }
 
-.cta:hover {
-  background: #2e7d32;
-  box-shadow: 0 0 10px #4caf50;
+.cta.primary {
+  background: linear-gradient(45deg, #4caf50, #45a049);
+  color: white;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.cta.primary:hover {
+  background: linear-gradient(45deg, #45a049, #3d8b40);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .nav-links {
+    gap: 1rem;
+  }
+
+  .nav-links li a {
+    font-size: 1rem;
+  }
+
+  .cta {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
 }

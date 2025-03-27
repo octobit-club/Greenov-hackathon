@@ -12,7 +12,7 @@ const Hiw = () => {
         <h2>How It Works</h2>
         <p>Discover the process of Greenov Hackathon in simple steps.</p>
       </div>
-      
+
       <div className="how-it-works-sections">
   <div className="how-it-works-container">
     <div className="step">
