@@ -4,8 +4,22 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Global colors */
 :root {
+  --primary-color: #001125;
+  --secondary-color: #4caf50;
+  --accent-color: #8bc34a;
+  --text-color: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.9);
+  --background-dark: rgba(0, 0, 0, 0.3);
+  --border-color: rgba(76, 175, 80, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --gradient-primary: linear-gradient(45deg, #4caf50, #45a049);
+  --gradient-text: linear-gradient(45deg, #4caf50, #8bc34a);
   --primary-color: #001125; /* Green */
   --secondary-color: #6a0dad; /* Purple */
   --text-color: #fff;
@@ -17,4 +31,5 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   overflow-x: hidden;
+  
 }
