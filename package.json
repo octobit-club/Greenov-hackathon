@@ -10,19 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "axios": "^1.8.4",
-    "framer-motion": "^12.6.2",
-    "lucide-react": "^0.484.0",
-    "mdb-react-ui-kit": "^9.0.0",
-=======
-    "@types/react-scroll": "^1.8.10",
-    "airtable": "^0.12.2",
     "axios": "^1.8.4",
     "firebase": "^11.5.0",
     "framer-motion": "^12.6.2",
     "lucide-react": "^0.484.0",
->>>>>>> origin/med
+    "mdb-react-ui-kit": "^9.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^7.4.0",
