@@ -2,8 +2,8 @@ import { useState } from 'react'
 import Hero from './components/Hero'
 import Navbar from './components/Navbar'
 import Hiw from './components/Hiw'
-import Register from './components/register'
-
+import Register from './components/Register'
+import Footer from './components/footer'
 
 function App() {
   
@@ -15,7 +15,7 @@ function App() {
           <Hero/>
           <Hiw/>
           <Register/>
-        
+          <Footer />
     </>
   )
 }

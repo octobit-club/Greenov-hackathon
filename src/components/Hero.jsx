@@ -3,14 +3,20 @@ import "../assets/styles/hero.css";
 import "../assets/styles/Navbar.css";
 import heroImage from "../assets/images/hero-image.png";
 import { motion } from 'framer-motion';
+import { Link, scrollToOptions } from 'react-scroll';
+
 
 const Hero = () => {
+  
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0
   });
+  
+
+
 
   const smoothScroll = (e) => {
     e.preventDefault();
@@ -18,31 +24,10 @@ const Hero = () => {
     const targetElement = document.getElementById(targetId);
     
     if (targetElement) {
-      const startPosition = window.pageYOffset;
-      const targetPosition = targetElement.getBoundingClientRect().top + startPosition - 80;
-      const distance = targetPosition - startPosition;
-      const duration = 2000;
-      let start = null;
-
-      const animation = (currentTime) => {
-        if (start === null) start = currentTime;
-        const timeElapsed = currentTime - start;
-        const run = ease(timeElapsed, startPosition, distance, duration);
-        window.scrollTo(0, run);
-
-        if (timeElapsed < duration) {
-          requestAnimationFrame(animation);
-        }
-      };
-
-      const ease = (t, b, c, d) => {
-        t /= d / 2;
-        if (t < 1) return c / 2 * t * t + b;
-        t--;
-        return -c / 2 * (t * (t - 2) - 1) + b;
-      };
-
-      requestAnimationFrame(animation);
+      targetElement.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
     }
   };
 
@@ -106,8 +91,8 @@ const Hero = () => {
             <span className="feature-text">Sustainable Focus</span>
           </div>
         </div>
-        <div className="cta-buttons">
-          <a href="#register" className="cta primary" onClick={smoothScroll}>Register Now</a>
+        <div className="cta-buttons" >
+          <a href="#register"  className="cta primary" onClick={smoothScroll}>Register Now</a>
           <a href="#hiw" className="cta secondary" onClick={smoothScroll}>How it works</a>
         </div>
       </div>
