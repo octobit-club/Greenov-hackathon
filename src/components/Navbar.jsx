@@ -9,31 +9,10 @@ const Navbar = () => {
     const targetElement = document.getElementById(targetId);
     
     if (targetElement) {
-      const startPosition = window.pageYOffset;
-      const targetPosition = targetElement.getBoundingClientRect().top + startPosition - 80;
-      const distance = targetPosition - startPosition;
-      const duration = 2000;
-      let start = null;
-
-      const animation = (currentTime) => {
-        if (start === null) start = currentTime;
-        const timeElapsed = currentTime - start;
-        const run = ease(timeElapsed, startPosition, distance, duration);
-        window.scrollTo(0, run);
-
-        if (timeElapsed < duration) {
-          requestAnimationFrame(animation);
-        }
-      };
-
-      const ease = (t, b, c, d) => {
-        t /= d / 2;
-        if (t < 1) return c / 2 * t * t + b;
-        t--;
-        return -c / 2 * (t * (t - 2) - 1) + b;
-      };
-
-      requestAnimationFrame(animation);
+      targetElement.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
     }
   };
 
