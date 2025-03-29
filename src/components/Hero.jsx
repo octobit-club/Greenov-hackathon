@@ -4,7 +4,10 @@ import "../assets/styles/Navbar.css";
 import heroImage from "../assets/images/hero-image.png";
 import { motion } from 'framer-motion';
 
+
+
 const Hero = () => {
+  
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -257,8 +260,8 @@ const Hero = () => {
             <span className="feature-text">Sustainable Focus</span>
           </div>
         </div>
-        <div className="cta-buttons">
-          <a href="#register" className="cta primary" onClick={smoothScroll}>Register Now</a>
+        <div className="cta-buttons" >
+          <a href="#register"  className="cta primary" onClick={smoothScroll}>Register Now</a>
           <a href="#hiw" className="cta secondary" onClick={smoothScroll}>How it works</a>
         </div>
       </div>
