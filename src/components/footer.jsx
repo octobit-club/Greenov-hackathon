@@ -64,9 +64,8 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <div className="copyright">
-          <p>&copy; 2025 Greenov Hackathon. All rights reserved.</p>
-        </div>
+        <p>&copy; {currentYear} Greenov. All Rights Reserved.</p>
+        <p>Made with <Heart size={14} style={{ color: '#ff6b6b', verticalAlign: 'middle', margin: '0 3px' }} /> for a sustainable future</p>
       </div>
     </footer>
   );
