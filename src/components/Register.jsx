@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, X, AlertCircle, User, Mail, Phone, Loader, Eye, EyeOff } from 'lucide-react';
 import "../assets/styles/Register.css";
+import { limit } from 'firebase/firestore';
+
 
 // Define variables for Firebase
 let db;
@@ -74,7 +76,7 @@ const Register = () => {
     fullName: '',
     email: '',
     phone: '',
-    address: '',
+    matricul: '',  // Changed from address to matricul
     teamName: '',
     teamMembers: [''],
     agreeToTerms: false
@@ -87,7 +89,7 @@ const Register = () => {
     initialized: false,
     error: null
   });
-  const [showAddress, setShowAddress] = useState(false);
+  const [showMatricul, setShowMatricul] = useState(false);  // Changed from showAddress to showMatricul
 
   // Initialize Firebase on component mount
   useEffect(() => {
@@ -186,15 +188,18 @@ const Register = () => {
       newErrors.phone = "Invalid phone number";
     }
 
-    // Address validation (changed to number validation)
-    if (!formData.address.trim()) {
-      newErrors.address = "Number is required";
-    } else {
-      const addressDigits = formData.address.replace(/\D/g, '');
-      if (addressDigits.length < 8 && addressDigits.length > 13) {
-        newErrors.address = "unvalid .Matricul.";
-      }
-    }
+    // Matricul validation
+if (!formData.matricul.trim()) {
+  newErrors.matricul = "Matricul is required";
+} else {
+  // Ensure it contains only digits
+  const matriculRegex = /^\d+$/;
+  if (!matriculRegex.test(formData.matricul)) {
+    newErrors.matricul = "Matricul must contain only numbers";
+  } else if (formData.matricul.length < 8 || formData.matricul.length > 13) {
+    newErrors.matricul = "Matricul must be between 8 and 13 digits";
+  }
+}
 
     // Team name validation
     if (!formData.teamName.trim()) {
@@ -231,39 +236,40 @@ const Register = () => {
           console.log("Checking for duplicates...");
           try {
             // Check for duplicate email
-            console.log(`Checking email: ${formData.email}`);
             const emailQuery = query(
               collection(db, 'registrations'), 
-              where('email', '==', formData.email)
+              where('email', '==', formData.email),
+              limit(1)
             );
-            const emailSnapshot = await getDocs(emailQuery);
-            console.log(`Email check found ${emailSnapshot.size} records.`);
-            if (!emailSnapshot.empty) {
-              console.log("Duplicate email found.");
+            
+            const emailQuerySnapshot = await getDocs(emailQuery);
+            if (!emailQuerySnapshot.empty) {
               setErrors(prev => ({
                 ...prev,
-                email: "This email is already registered. Please use a different email."
+                email: "This email is already registered",
+                submission: "Duplicate registration detected"
               }));
+              setSubmitStatus('error');
               throw new Error("Duplicate registration detected");
             }
-
+            
             // Check for duplicate team name
-            console.log(`Checking team name: ${formData.teamName}`);
             const teamQuery = query(
               collection(db, 'registrations'), 
-              where('teamName', '==', formData.teamName)
+              where('teamName', '==', formData.teamName),
+              limit(1)
             );
-            const teamSnapshot = await getDocs(teamQuery);
-            console.log(`Team name check found ${teamSnapshot.size} records.`);
-            if (!teamSnapshot.empty) {
-              console.log("Duplicate team name found.");
+            
+            const teamQuerySnapshot = await getDocs(teamQuery);
+            if (!teamQuerySnapshot.empty) {
               setErrors(prev => ({
                 ...prev,
-                teamName: "This team name is already taken. Please choose a different name."
+                teamName: "This team name is already taken",
+                submission: "Duplicate team name"
               }));
+              setSubmitStatus('error');
               throw new Error("Duplicate team name");
             }
-            console.log("Duplicate checks passed.");
           } catch (error) {
             // If error is not a duplicate error, it's a Firebase error
             if (error.message !== "Duplicate registration detected" && 
@@ -281,7 +287,7 @@ const Register = () => {
           fullName: formData.fullName,
           email: formData.email,
           phone: formData.phone,
-          address: formData.address,
+          matricul: formData.matricul,  // Changed from address to matricul
           teamName: formData.teamName,
           teamMembers: formData.teamMembers.filter(member => member.trim() !== ''),
           registeredAt: new Date(),
@@ -314,7 +320,7 @@ const Register = () => {
           fullName: '',
           email: '',
           phone: '',
-          address: '',
+          matricul: '',  // Changed from address to matricul
           teamName: '',
           teamMembers: [''],
           agreeToTerms: false
@@ -372,7 +378,7 @@ const Register = () => {
       fullName: '',
       email: '',
       phone: '',
-      address: '',
+      matricul: '',  // Changed from address to matricul
       teamName: '',
       teamMembers: [''],
       agreeToTerms: false
@@ -508,26 +514,26 @@ const Register = () => {
                 <div className="form-group">
                   <div className="input-icon-wrapper">
                     <input
-                      type={showAddress ? "text" : "password"}
-                      name="address"
-                      value={formData.address}
+                      type={showMatricul ? "text" : "password"}
+                      name="matricul"
+                      value={formData.matricul}
                       onChange={handleChange}
                       placeholder="Matricul"
                     />
                     
                     <button 
                       type="button"
-                      onClick={() => setShowAddress(!showAddress)} 
+                      onClick={() => setShowMatricul(!showMatricul)} 
                       className="password-toggle"
-                      aria-label={showAddress ? "Hide matricul" : "Show matricul"}
+                      aria-label={showMatricul ? "Hide matricul" : "Show matricul"}
                     >
-                      {showAddress ? <Eye size={18} /> : <EyeOff size={18} />}
+                      {showMatricul ? <Eye size={18} /> : <EyeOff size={18} />}
                     </button>
                   </div>
-                  {errors.address && (
+                  {errors.matricul && (
                     <p className="error">
                       <AlertCircle size={14} style={{ marginRight: '6px' }} />
-                      {errors.address}
+                      {errors.matricul}
                     </p>
                   )}
                 </div>
