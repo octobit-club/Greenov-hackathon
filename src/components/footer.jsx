@@ -34,18 +34,6 @@ const Footer = () => {
         </div>
 
         <div className="footer-section contact">
-          <h4>Visit Octopus</h4>
-          <a href="https://your-octopus-website.com" aria-label="Octopus Website" className="octopus-link">
-            <div className="flex items-center justify-center relative" style={{ width: "150px", height: "150px" }}>
-              <img 
-                src={octopusSvg} 
-                alt="Octopus Icon" 
-                width="100%" 
-                height="100%"
-                className="transition-all duration-500 hover:scale-110"
-              />
-            </div>
-          </a>
           <div className="social-icons">
             <a href="#" aria-label="Facebook">
               <Facebook size={20} />
