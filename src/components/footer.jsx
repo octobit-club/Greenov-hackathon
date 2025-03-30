@@ -1,7 +1,7 @@
 import React from 'react';
-
 import '../assets/styles/footer.css';
-import { ArrowRight,Dribbble, Facebook, Twitter, Instagram, Linkedin, ChevronRight, Mail, Send, MapPin, Phone, Clock, Heart } from 'lucide-react';
+import { ArrowRight, Dribbble, Facebook, Twitter, Instagram, Linkedin, ChevronRight, Mail, Send, MapPin, Phone, Clock, Heart } from 'lucide-react';
+import octopusSvg from '../assets/images/Untitled design(1).svg';
 
 const Footer = () => {
   return (
@@ -34,25 +34,32 @@ const Footer = () => {
         </div>
 
         <div className="footer-section contact">
-          <h4>Contact Us</h4>
-          <p><i className="fas fa-envelope"></i> info@greenov.com</p>
-          <p><i className="fas fa-phone"></i> +1 (234) 567-8900</p>
-          <p><i className="fas fa-map-marker-alt"></i> Tech Hub, Innovation Street</p>
+          <h4>Visit Octopus</h4>
+          <a href="https://your-octopus-website.com" aria-label="Octopus Website" className="octopus-link">
+            <div className="flex items-center justify-center relative" style={{ width: "150px", height: "150px" }}>
+              <img 
+                src={octopusSvg} 
+                alt="Octopus Icon" 
+                width="100%" 
+                height="100%"
+                className="transition-all duration-500 hover:scale-110"
+              />
+            </div>
+          </a>
           <div className="social-icons">
-                <a href="#" aria-label="Facebook">
-                  <Facebook size={20} />
-                </a>
-                <a href="#" aria-label="Twitter">
-                  <Twitter size={20} />
-                </a>
-                <a href="#" aria-label="Instagram">
-                  <Instagram size={20} />
-                </a>
-                <a href="#" aria-label="LinkedIn">
-                  <Linkedin size={20} />
-                </a>
-              </div>
-            
+            <a href="#" aria-label="Facebook">
+              <Facebook size={20} />
+            </a>
+            <a href="#" aria-label="Twitter">
+              <Twitter size={20} />
+            </a>
+            <a href="#" aria-label="Instagram">
+              <Instagram size={20} />
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <Linkedin size={20} />
+            </a>
+          </div>
         </div>
       </div>
 
@@ -60,13 +67,9 @@ const Footer = () => {
         <div className="copyright">
           <p>&copy; 2025 Greenov Hackathon. All rights reserved.</p>
         </div>
-
       </div>
     </footer>
   );
 };
 
-
 export default Footer;
-
-

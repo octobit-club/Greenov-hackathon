@@ -198,3 +198,153 @@
     justify-content: center;
   }
 }
+/* Add this to your footer.css file */
+
+/* Style for the octopus icon to ensure it's white by default */
+.octopus-icon {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Add a pulsing animation to make tentacles appear to move when hovered */
+@keyframes tentacleWiggle {
+  0% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.05) rotate(3deg); }
+  50% { transform: scale(1.1) rotate(-3deg); }
+  75% { transform: scale(1.05) rotate(2deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Apply the animation on hover */
+.octopus-icon:hover {
+  animation: tentacleWiggle 0.6s ease-in-out;
+  color: #4caf50; /* Turn green on hover */
+}
+
+/* Override the default social-icons hover to include our special animation */
+.social-icons .octopus-icon:hover {
+  color: #fff; /* Keep text white but background changes to green */
+  transform: translateY(-5px); /* Keep the upward movement */
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4); /* Keep the glow effect */
+  animation: tentacleWiggle 0.6s ease-in-out; /* Add the wiggle animation */
+}
+/* Add these styles to your footer.css file */
+
+/* Replace the contact section with octopus section */
+.footer-section.octopus-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Style for the larger octopus */
+.octopus-link {
+  display: block;
+  margin: 15px 0;
+  transition: all 0.4s ease;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Animation for the octopus */
+@keyframes tentacleWiggle {
+  0% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.05) rotate(3deg); }
+  50% { transform: scale(1.1) rotate(-3deg); }
+  75% { transform: scale(1.05) rotate(2deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Apply hover effects to the octopus */
+.octopus-link:hover {
+  color: #4caf50;
+  transform: translateY(-5px);
+  animation: tentacleWiggle 0.8s ease-in-out;
+  filter: drop-shadow(0 0 10px rgba(76, 175, 80, 0.6));
+}
+
+/* Responsive adjustments */
+@media (max-width: 968px) {
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .footer-section.brand {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+  
+  .footer-section.octopus-section {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 568px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .footer {
+    padding: 60px 0 20px;
+  }
+  
+  .footer-section {
+    text-align: center;
+  }
+}
+/* Add these styles to your footer.css */
+
+.octopus-link {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.octopus-link:hover {
+  transform: scale(1.1) translateY(-5px);
+}
+
+/* Add custom animation for the tentacles */
+@keyframes tentacleWave {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.03) rotate(2deg); }
+  50% { transform: scale(1.05) rotate(-2deg); }
+  75% { transform: scale(1.03) rotate(1deg); }
+}
+
+/* Glow effect on hover */
+.octopus-link:hover .octopus-svg {
+  filter: drop-shadow(0 0 10px rgba(76, 175, 80, 0.6));
+  animation: tentacleWave 1.5s ease-in-out infinite;
+  color: #4caf50;
+}
+
+/* Add this class to tentacle paths for independent animation */
+.octopus-svg path:nth-child(3),
+.octopus-svg path:nth-child(4),
+.octopus-svg path:nth-child(5),
+.octopus-svg path:nth-child(6) {
+  transform-origin: 50% 40%;
+  transition: transform 0.3s ease;
+}
+
+/* Slight delay for different tentacles */
+.octopus-link:hover .octopus-svg path:nth-child(3) {
+  animation: tentacleWave 2s ease-in-out 0.1s infinite;
+}
+
+.octopus-link:hover .octopus-svg path:nth-child(4) {
+  animation: tentacleWave 2s ease-in-out 0.2s infinite;
+}
+
+.octopus-link:hover .octopus-svg path:nth-child(5) {
+  animation: tentacleWave 2s ease-in-out 0.3s infinite;
+}
+
+.octopus-link:hover .octopus-svg path:nth-child(6) {
+  animation: tentacleWave 2s ease-in-out 0.4s infinite;
+}

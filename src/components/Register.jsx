@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Plus, X, AlertCircle, User, Mail, Phone, Loader, Eye, EyeOff } from 'lucide-react';
 import "../assets/styles/Register.css";
 
-
 // Define variables for Firebase
 let db;
 let collection;
