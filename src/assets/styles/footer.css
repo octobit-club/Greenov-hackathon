@@ -348,3 +348,23 @@
 .octopus-link:hover .octopus-svg path:nth-child(6) {
   animation: tentacleWave 2s ease-in-out 0.4s infinite;
 }
+
+/* Add this to your footer.css file */
+.paused-gif {
+  animation-play-state: paused !important;
+}
+
+.paused-gif:hover {
+  animation-play-state: running !important;
+}
+
+/* This helps ensure more consistent behavior across browsers */
+@media screen {
+  .paused-gif {
+    opacity: 0.999;
+  }
+  
+  .paused-gif:hover {
+    opacity: 1;
+  }
+}

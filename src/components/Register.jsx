@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, X, AlertCircle, User, Mail, Phone, Loader, Eye, EyeOff } from 'lucide-react';
 import "../assets/styles/Register.css";
-import { limit } from 'firebase/firestore';
+
 
 
 // Define variables for Firebase
@@ -221,130 +221,83 @@ if (!formData.matricul.trim()) {
     return Object.keys(newErrors).length === 0;
   };
   
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Form validation starting...");
-    if (validateForm()) {
-      console.log("Form validation passed. Submitting...");
-      try {
-        setIsSubmitting(true);
-        setSubmitStatus(null);
-        console.log("Firebase status on submit:", firebaseStatus);
-
-        // Skip duplicate checks in mock mode
-        if (firebaseStatus.initialized) {
-          console.log("Checking for duplicates...");
-          try {
-            // Check for duplicate email
-            const emailQuery = query(
-              collection(db, 'registrations'), 
-              where('email', '==', formData.email),
-              limit(1)
-            );
-            
-            const emailQuerySnapshot = await getDocs(emailQuery);
-            if (!emailQuerySnapshot.empty) {
-              setErrors(prev => ({
-                ...prev,
-                email: "This email is already registered",
-                submission: "Duplicate registration detected"
-              }));
-              setSubmitStatus('error');
-              throw new Error("Duplicate registration detected");
-            }
-            
-            // Check for duplicate team name
-            const teamQuery = query(
-              collection(db, 'registrations'), 
-              where('teamName', '==', formData.teamName),
-              limit(1)
-            );
-            
-            const teamQuerySnapshot = await getDocs(teamQuery);
-            if (!teamQuerySnapshot.empty) {
-              setErrors(prev => ({
-                ...prev,
-                teamName: "This team name is already taken",
-                submission: "Duplicate team name"
-              }));
-              setSubmitStatus('error');
-              throw new Error("Duplicate team name");
-            }
-          } catch (error) {
-            // If error is not a duplicate error, it's a Firebase error
-            if (error.message !== "Duplicate registration detected" && 
-                error.message !== "Duplicate team name") {
-              console.error("Firebase query error:", error.code, error.message);
-              throw new Error(`Database query error: ${error.message} (Code: ${error.code || 'N/A'})`);
-            } else {
-              throw error; // Re-throw duplicate errors
-            }
-          }
-        }
-
-        // Prepare data for Firebase
-        const registrationData = {
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          matricul: formData.matricul,  // Changed from address to matricul
-          teamName: formData.teamName,
-          teamMembers: formData.teamMembers.filter(member => member.trim() !== ''),
-          registeredAt: new Date(),
-          agreeToTerms: true
-        };
-        console.log("Prepared data for Firestore:", registrationData);
-        
-        // Add to Firestore
-        try {
-          if (firebaseStatus.initialized) {
-            console.log("Attempting to add document to Firestore...");
-            const docRef = await addDoc(collection(db, 'registrations'), registrationData);
-            console.log("Form submitted to Firebase successfully! Document ID:", docRef.id);
-          } else {
-            // Using mock implementation
-            console.log("Using mock database for submission.");
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
-            console.log("Form submitted to mock database:", registrationData);
-          }
-        } catch (error) {
-          console.error("Firestore write error:", error.code, error.message, error);
-          throw new Error(`Failed to save registration: ${error.message} (Code: ${error.code || 'N/A'})`);
-        }
-        
-        // Success handling
-        setSubmitStatus('success');
-        
-        // Reset form
-        setFormData({
-          fullName: '',
-          email: '',
-          phone: '',
-          matricul: '',  // Changed from address to matricul
-          teamName: '',
-          teamMembers: [''],
-          agreeToTerms: false
-        });
-        
-      } catch (error) {
-        console.error("Error submitting registration:", error);
-        // Only set general submit error if it's not a duplicate registration
-        if (error.message !== "Duplicate registration detected" && 
-            error.message !== "Duplicate team name") {
-          setSubmitStatus('error');
-          // Set specific error message
+  // Modified handleSubmit function for the Register component
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  console.log("Form validation starting...");
+  if (validateForm()) {
+    console.log("Form validation passed. Submitting...");
+    try {
+      setIsSubmitting(true);
+      setSubmitStatus(null);
+      
+      // Prepare data for API
+      const registrationData = {
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        matricul: formData.matricul,
+        teamName: formData.teamName,
+        teamMembers: formData.teamMembers.filter(member => member.trim() !== '')
+      };
+      
+      // Submit to our API endpoint instead of directly to Firebase
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(registrationData),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        // Handle specific error codes
+        if (response.status === 409) {
+          // Conflict - duplicate data
           setErrors(prev => ({
             ...prev,
-            submission: error.message
+            [data.field]: data.error,
+            submission: data.error
           }));
+          setSubmitStatus('error');
+          throw new Error(data.error);
+        } else {
+          throw new Error(data.error || 'Error submitting registration');
         }
-      } finally {
-        setIsSubmitting(false);
       }
-    } else {
-      console.log("Form validation failed. Errors:", errors);
+      
+      // Success handling
+      setSubmitStatus('success');
+      
+      // Reset form
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        matricul: '',
+        teamName: '',
+        teamMembers: [''],
+        agreeToTerms: false
+      });
+      
+    } catch (error) {
+      console.error("Error submitting registration:", error);
+      if (!errors.submission) {
+        setSubmitStatus('error');
+        setErrors(prev => ({
+          ...prev,
+          submission: error.message
+        }));
+      }
+    } finally {
+      setIsSubmitting(false);
     }
-  };
+  } else {
+    console.log("Form validation failed. Errors:", errors);
+  }
+};
 
   const clearBrowserData = async () => {
     // Clear console logs
