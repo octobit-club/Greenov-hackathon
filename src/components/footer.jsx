@@ -75,7 +75,7 @@ const Footer = () => {
                 ref={gifRef}
                 src={transparentPixel}
                 alt="Octopus Animation" 
-                width="100%" 
+                width="130%" 
                 height="100%"
                 style={{ display: isHovering ? 'block' : 'none' }}
               />
